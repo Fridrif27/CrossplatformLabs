@@ -7,7 +7,7 @@ class Program
     public static void Main()
     {
         // Read input data from file INPUT.TXT
-        var input = File.ReadAllLines("INPUT.TXT");
+        var input = File.ReadAllLines("/home/user/RiderProjects/CrossplatformLabs/Lab1/NumberMinimizer/ResultExecution/INPUT.TXT");
         var firstLine = input[0].Split().Select(int.Parse).ToArray();
         int L = firstLine[0];
         int N = firstLine[1];
@@ -16,7 +16,7 @@ class Program
         int result = CalculateMinimumGroups(L, N, numbers);
 
         // Write the result to file OUTPUT.TXT
-        File.WriteAllText("OUTPUT.TXT", result.ToString());
+        File.WriteAllText("/home/user/RiderProjects/CrossplatformLabs/Lab1/NumberMinimizer/ResultExecution/OUTPUT.TXT", result.ToString());
     }
 
     public static int CalculateMinimumGroups(int L, int N, int[] numbers)
