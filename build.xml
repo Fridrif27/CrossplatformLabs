@@ -1,0 +1,24 @@
+<Project DefaultTargets="RunAllProjects" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Define a list of all project and test directories in any Lab folder -->
+    <ItemGroup>
+        <LabProjects Include="Lab*/**/*.csproj" Exclude="**/*.Tests.csproj" />
+        <LabTestProjects Include="Lab*/**/*.Tests.csproj" />
+    </ItemGroup>
+
+    <!-- Define a target to build all projects -->
+    <Target Name="BuildProjects">
+        <!-- Build all projects except test projects -->
+        <MSBuild Projects="@(LabProjects)" Targets="Build" />
+        <!-- Build all test projects -->
+        <MSBuild Projects="@(LabTestProjects)" Targets="Build" />
+    </Target>
+
+    <!-- Define a target to run all projects and tests -->
+    <Target Name="RunAllProjects" DependsOnTargets="BuildProjects">
+        <!-- Run the main projects (assume they are console apps or DLLs) -->
+        <Exec Command="@(LabProjects->'dotnet %(RootDir)%(Directory)bin/Debug/net8.0/%(Filename).dll')" ContinueOnError="true" />
+
+        <!-- Run tests for all labs -->
+        <Exec Command="dotnet test @(LabTestProjects)" />
+    </Target>
+</Project>
