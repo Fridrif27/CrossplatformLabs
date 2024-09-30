@@ -1,7 +1,13 @@
 <Project DefaultTargets="RunAllProjects" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Property to specify the lab to build, defaulting to all labs -->
+    <PropertyGroup>
+        <SelectedLab Condition="'$(SelectedLab)' == ''">Lab*</SelectedLab>
+    </PropertyGroup>
+
     <ItemGroup>
-        <LabProjects Include="Lab*/**/*.csproj" Exclude="**/*.Tests.csproj" />
-        <LabTestProjects Include="Lab*/**/*.Tests.csproj" />
+        <!-- Include only the selected lab projects -->
+        <LabProjects Include="$(SelectedLab)/**/*.csproj" Exclude="**/*.Tests.csproj" />
+        <LabTestProjects Include="$(SelectedLab)/**/*.Tests.csproj" />
     </ItemGroup>
 
     <Target Name="BuildProjects">
