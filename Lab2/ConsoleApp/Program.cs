@@ -34,7 +34,7 @@ public class Game
     public static void Main(string[] args)
     {
         // Читання даних з файлу INPUT.TXT
-        string[] input = System.IO.File.ReadAllLines("/home/user/RiderProjects/CrossplatformLabs/Lab2/Game/ResultExecution/INPUT.TXT");
+        string[] input = System.IO.File.ReadAllLines("/home/user/RiderProjects/CrossplatformLabs/Lab2/ConsoleApp/ResultExecution/INPUT.TXT");
         int n = int.Parse(input[0]);
         int[] nums = Array.ConvertAll(input[1].Split(' '), int.Parse);
         
@@ -42,6 +42,6 @@ public class Game
         int result = DetermineWinner(nums);
         
         // Запис результату в файл OUTPUT.TXT
-        System.IO.File.WriteAllText("/home/user/RiderProjects/CrossplatformLabs/Lab2/Game/ResultExecution/OUTPUT.TXT", result.ToString());
+        System.IO.File.WriteAllText("/home/user/RiderProjects/CrossplatformLabs/Lab2/ConsoleApp/ResultExecution/OUTPUT.TXT", result.ToString());
     }
 }

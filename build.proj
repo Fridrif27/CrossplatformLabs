@@ -1,28 +1,82 @@
-<Project DefaultTargets="RunAllProjects" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <!-- Property to specify the lab to build, defaulting to all labs -->
+<Project>
     <PropertyGroup>
-        <SelectedLab Condition="'$(SelectedLab)' == ''">Lab*</SelectedLab>
+        <TargetFramework>net8.0</TargetFramework>
+        <Solution Condition="'$(Solution)' == ''"></Solution>
+        <Lab1Solution>Lab1/Lab1.sln</Lab1Solution>
+        <Lab2Solution>Lab2/Lab2.sln</Lab2Solution>
+        <Lab3Solution>Lab3/Lab3.sln</Lab3Solution>
     </PropertyGroup>
 
-    <ItemGroup>
-        <!-- Include only the selected lab projects -->
-        <LabProjects Include="$(SelectedLab)/**/*.csproj" Exclude="**/*.Tests.csproj" />
-        <LabTestProjects Include="$(SelectedLab)/**/*.Tests.csproj" />
+    <ItemGroup Condition="'$(Solution)' != ''">
+        <ProjectFile Include="$(Solution)\**\*.csproj" />
     </ItemGroup>
 
-    <Target Name="BuildProjects">
-        <MSBuild Projects="@(LabProjects)" Targets="Build" />
-        <MSBuild Projects="@(LabTestProjects)" Targets="Build" />
+    <ItemGroup>
+        <Lab1ProjectFile Include="$(Lab1Solution)\**\*.csproj" />
+        <Lab2ProjectFile Include="$(Lab2Solution)\**\*.csproj" />
+        <Lab3ProjectFile Include="$(Lab3Solution)\**\*.csproj" />
+    </ItemGroup>
+
+    <Target Name="Build">
+        <MSBuild Projects="@(ProjectFile);@(Lab1ProjectFile);@(Lab2ProjectFile);@(Lab3ProjectFile)" Targets="Restore;Build" />
     </Target>
 
-    <Target Name="RunAllProjects" DependsOnTargets="BuildProjects">
-        <!-- Run all the main projects -->
-        <Exec Command="@(LabProjects->'dotnet %(RootDir)%(Directory)bin/Debug/net8.0/%(Filename).dll')" ContinueOnError="true" />
+    <Target Name="BuildLab1">
+        <MSBuild Projects="@(Lab1ProjectFile)" Targets="Restore;Build" />
+    </Target>
 
-        <!-- Display the test projects being executed -->
-        <Message Text="Running tests for projects: @(LabTestProjects)" Importance="high" />
+    <Target Name="BuildLab2">
+        <MSBuild Projects="@(Lab2ProjectFile)" Targets="Restore;Build" />
+    </Target>
 
-        <!-- Run tests dynamically for all test projects -->
-        <Exec Command="@(LabTestProjects->'dotnet test %(FullPath)')" />
+    <Target Name="BuildLab3">
+        <MSBuild Projects="@(Lab3ProjectFile)" Targets="Restore;Build" />
+    </Target>
+
+    <Target Name="Test">
+        <Exec Command="dotnet test --logger &quot;console;verbosity=detailed&quot;" WorkingDirectory="$(Solution)" />
+        <Exec Command="dotnet test $(Lab1Solution) --logger &quot;console;verbosity=detailed&quot;" />
+        <Exec Command="dotnet test $(Lab2Solution) --logger &quot;console;verbosity=detailed&quot;" />
+        <Exec Command="dotnet test $(Lab3Solution) --logger &quot;console;verbosity=detailed&quot;" />
+    </Target>
+
+    <Target Name="TestLab1">
+        <Exec Command="dotnet test $(Lab1Solution) --logger &quot;console;verbosity=detailed&quot;" />
+    </Target>
+
+    <Target Name="TestLab2">
+        <Exec Command="dotnet test $(Lab2Solution) --logger &quot;console;verbosity=detailed&quot;" />
+    </Target>
+
+    <Target Name="TestLab3">
+        <Exec Command="dotnet test $(Lab3Solution) --logger &quot;console;verbosity=detailed&quot;" />
+    </Target>
+
+    <Target Name="Run">
+        <PropertyGroup>
+            <MainProject>Lab1/ConsoleApp/ConsoleApp.csproj</MainProject>
+        </PropertyGroup>
+        <Exec Command="dotnet run --project &quot;$(MainProject)&quot;" WorkingDirectory="$(Solution)" />
+    </Target>
+
+    <Target Name="RunLab1">
+        <PropertyGroup>
+            <MainProject>Lab1/ConsoleApp/ConsoleApp.csproj</MainProject>
+        </PropertyGroup>
+        <Exec Command="dotnet run --project &quot;$(MainProject)&quot;" WorkingDirectory="$(Solution)" />
+    </Target>
+
+    <Target Name="RunLab2">
+        <PropertyGroup>
+            <MainProject>Lab2/ConsoleApp/ConsoleApp.csproj</MainProject>
+        </PropertyGroup>
+        <Exec Command="dotnet run --project &quot;$(MainProject)&quot;" WorkingDirectory="$(Solution)" />
+    </Target>
+
+    <Target Name="RunLab3">
+        <PropertyGroup>
+            <MainProject>Lab3/ConsoleApp/ConsoleApp.csproj</MainProject>
+        </PropertyGroup>
+        <Exec Command="dotnet run --project &quot;$(MainProject)&quot;" WorkingDirectory="$(Solution)" />
     </Target>
 </Project>
