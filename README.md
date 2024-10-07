@@ -17,17 +17,17 @@ To build a specific lab, follow these steps:
 2. **Run Build Command**:
    - To build **Lab1**:
      ```bash
-     dotnet msbuild build.proj /p:SelectedLab=Lab1
+     dotnet build Build.proj -p:Solution=Lab1 -t:Build
      ```
 
    - To build **Lab2**:
      ```bash
-     dotnet msbuild build.proj /p:SelectedLab=Lab2
+     dotnet build Build.proj -p:Solution=Lab2 -t:Build
      ```
 
    - To build **Lab3**:
         ```bash
-        dotnet msbuild build.proj /p:SelectedLab=Lab3
+        dotnet build Build.proj -p:Solution=Lab3 -t:Build
         ```
 
 3. **Monitor Output**: Observe the terminal for any errors or warnings during the build process.
@@ -41,17 +41,17 @@ To run the unit tests for a specific lab:
 2. **Run Test Command**:
    - To test **Lab1**:
      ```bash
-     dotnet msbuild build.proj /t:TestLab1
+     dotnet build Build.proj -p:Solution=Lab1 -t:Test
      ```
 
    - To test **Lab2**:
      ```bash
-     dotnet msbuild build.proj /t:TestLab2
+     dotnet build Build.proj -p:Solution=Lab2 -t:Test
      ```
 
    - To test **Lab3**:
         ```bash
-        dotnet msbuild build.proj /t:TestLab3
+        dotnet build Build.proj -p:Solution=Lab3 -t:Test
         ```
 
 3. **Monitor Output**: Watch the terminal for the results of the unit tests.
@@ -65,17 +65,17 @@ To run a specific lab’s console application:
 2. **Run the Application Command**:
    - To run **Lab1**:
      ```bash
-     dotnet msbuild build.proj /t:RunLab1
+     dotnet build Build.proj -p:Solution=Lab1 -t:Run
      ```
 
    - To run **Lab2**:
      ```bash
-     dotnet msbuild build.proj /t:RunLab2
+     dotnet build Build.proj -p:Solution=Lab2 -t:Run
      ```
 
    - To run **Lab3**:
         ```bash
-        dotnet msbuild build.proj /t:RunLab3
+        dotnet build Build.proj -p:Solution=Lab3 -t:Run
         ```
 
 
